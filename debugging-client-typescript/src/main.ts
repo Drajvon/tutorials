@@ -5,25 +5,25 @@ const usersButton = document.querySelector('#usersButton');
 const resultField = document.querySelector('#result');
 const usersList = document.querySelector('ul');
 
-const isNotEmpty = () => {
+const isNotEmpty = (): boolean => {
   const firstValue = firstInput.value;
   const secondValue = secondInput.value;
 
   return firstValue !== '' && secondValue !== '';
 }
 
-const displayResult = (result) => {
+const displayResult = (result): void => {
   resultField.textContent = result;
 }
 
-const addTwoNumbers = () => {
-  const firstValue = firstInput.value;
-  const secondValue = secondInput.value;
+const addTwoNumbers = (): number => {
+  const firstValue = Number(firstInput.value);
+  const secondValue = Number(secondInput.value);
 
   return firstValue + secondValue;
 }
 
-const onButtonClick = (event) => {
+const onButtonClick = (event: Event): void => {
   event.preventDefault();
 
   if (!isNotEmpty()) {
@@ -34,14 +34,14 @@ const onButtonClick = (event) => {
   displayResult(result);
 }
 
-const getUsers = async () => {
+const getUsers = async (): Promise<{ id: number, name: string }[]> => {
   const response = await fetch('https://jsonplaceholder.typicode.com/userss');
   const users = response.json();
 
   return users;
 }
 
-const displayUsers = (users) => {
+const displayUsers = (users: { id: number, name: string }[]): void => {
   const documentFragment = document.createDocumentFragment();
 
   users.forEach(user => {
@@ -54,7 +54,7 @@ const displayUsers = (users) => {
   usersList.appendChild(documentFragment);
 }
 
-const onUsersButtonClick = async (event) => {
+const onUsersButtonClick = async (event: Event): Promise<void> => {
   event.preventDefault();
 
   const users = await getUsers();
